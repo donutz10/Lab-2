@@ -6,10 +6,17 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <ctype.h>
 // Find Header Files and Put them here
 // For example, #include <stdio.h>
 // Please Add your remark at the ends of lines, line by line
 #define BUF_SIZE 1024
+void make_upper(char *message)
+{
+    int length = strlen(message);
+    for (int i = 0; i < length; i++)
+        message[i] = toupper(message[i]);
+}
 int main(int argc, char *argv[])
 {
     int serv_sock, clnt_sock;
@@ -53,6 +60,7 @@ int main(int argc, char *argv[])
         write(clnt_sock, message, strlen(message));
         str_len = read(clnt_sock, message, BUF_SIZE - 1);
         message[str_len] = 0;
+        make_upper(message);
         printf("\nMessage from client: %s", message);
     }
 
